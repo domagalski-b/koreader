@@ -4,6 +4,9 @@ These patches were made for KOReader SimpleUI to allow a fullscreen homescreen w
 
 ### Included patches
 
+- `2-simpleui-homescreen-wallpaper-v1-fullscreen.lua`  
+  Main wallpaper patch.
+
 - `2-simpleui-homescreen-wallpaper-v7-fullscreen.lua`  
   Extends the homescreen wallpaper across the full screen, including the bottom navigation area.
 
@@ -14,7 +17,7 @@ These patches were made for KOReader SimpleUI to allow a fullscreen homescreen w
   Hides the thin separator line above the bottom navbar.
 
 - `2-simpleui-reading-stats-transparent-v6`  
-  Makes the reading stats cards transparent 
+  Makes the reading stats cards transparent.
 
 
 ### Result
