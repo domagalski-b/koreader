@@ -4,9 +4,6 @@ These patches were made for KOReader SimpleUI to allow a fullscreen homescreen w
 
 ### Included patches
 
-- `2-simpleui-homescreen-wallpaper-v1-fullscreen.lua`  
-  Main wallpaper patch.
-
 - `2-simpleui-homescreen-wallpaper-v7-fullscreen.lua`  
   Extends the homescreen wallpaper across the full screen, including the bottom navigation area.
 
