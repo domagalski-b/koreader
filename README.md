@@ -13,12 +13,17 @@ These patches were made for KOReader SimpleUI to allow a fullscreen homescreen w
 - `2-simpleui-navbar-separator-hide.lua`  
   Hides the thin separator line above the bottom navbar.
 
+- `2-simpleui-reading-stats-transparent-v6`  
+  Makes the reading stats cards transparent 
+
+
 ### Result
 
 Together, these patches allow:
 - one continuous wallpaper across the full homescreen
 - no black selector strip in the bottom navbar
 - no separator line above the navbar
+- transparent stats module
 
 ### Notes
 
