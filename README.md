@@ -1,31 +1,126 @@
-## SimpleUI Wallpaper / Navbar Patches
+SimpleUI Custom Look (KOReader Plugin)
 
-These patches were made for KOReader SimpleUI to allow a fullscreen homescreen wallpaper with a clean bottom bar.
+A lightweight KOReader plugin that unifies multiple SimpleUI visual tweaks into a single, stable solution.
 
-### Included patches
+Originally developed as a set of standalone patches, this project has been refactored into a plugin to improve reliability, maintainability, and compatibility with future updates.
 
-- `2-simpleui-homescreen-wallpaper-v7-fullscreen.lua`  
-  Extends the homescreen wallpaper across the full screen, including the bottom navigation area.
+⸻
 
-- `2-simpleui-navbar-indicator-off-v2.lua`  
-  Removes the moving black navbar indicator strip.
+✨ Features
 
-- `2-simpleui-navbar-separator-hide.lua`  
-  Hides the thin separator line above the bottom navbar.
+This plugin applies the following UI improvements to KOReader SimpleUI:
 
-- `2-simpleui-reading-stats-transparent-v6`  
-  Makes the reading stats cards transparent.
+🖼 Homescreen
 
+* Fullscreen wallpaper support across all sections
+* Seamless background continuation (no breaks between modules)
 
-### Result
+🔽 Navigation Bar
 
-Together, these patches allow:
-- one continuous wallpaper across the full homescreen
-- no black selector strip in the bottom navbar
-- no separator line above the navbar
-- transparent stats module
+* Removes bottom navigation indicator
+* Hides separator line above navbar
 
-### Notes
+📊 Reading Stats
 
-These patches were built against the current SimpleUI structure and may need adjustment after future SimpleUI updates.
-Use them together, and disable older experimental navbar patches.
+* Fully transparent reading stats module
+* Preserves layout and typography
+
+💬 Quote Module
+
+* Removes white background behind:
+    * quote text
+    * author text
+* Uses custom AlphaTextBoxWidget for proper transparency rendering
+
+⸻
+
+🚀 Why a Plugin?
+
+The original approach used multiple .lua patches placed in the patches/ directory.
+
+This worked, but had limitations:
+
+* patches could break silently after updates
+* difficult to manage multiple files
+* some features (like quote transparency) require plugin-level context
+
+The plugin approach provides:
+
+* controlled loading via KOReader plugin system
+* better error isolation (one module failing won’t break everything)
+* support for custom widgets (required for quote transparency)
+* cleaner structure and easier future updates
+
+⸻
+
+📦 Installation
+
+1. Download the latest release
+2. Extract the folder:
+    simpleui_custom_look_v2.koplugin
+3. Copy it to your KOReader plugins/ directory
+4. Remove old patches from:
+    koreader/patches/
+5. Restart KOReader
+
+⸻
+
+⚠️ Important Notes
+
+* Do NOT use this plugin together with the old patch files — they may conflict
+* Designed specifically for KOReader SimpleUI
+* If SimpleUI internals change in future updates, adjustments may be required
+
+⸻
+
+🧩 Structure
+
+simpleui_custom_look.koplugin/
+├── main.lua
+├── quote_patch.lua
+├── reading_stats_patch.lua
+├── navbar_indicator_patch.lua
+├── navbar_separator_patch.lua
+├── wallpaper_patch.lua
+└── widgets/
+└── alphatextboxwidget.lua
+
+⸻
+
+🛠 Development Notes
+
+* Quote transparency required replacing TextBoxWidget with a custom AlphaTextBoxWidget
+* This could not be reliably achieved with standard patches
+* Final solution leverages plugin context and controlled widget rendering
+
+⸻
+
+🔄 Migration from Patches
+
+If you were previously using:
+
+* 2-simpleui-homescreen-wallpaper-*.lua
+* 2-simpleui-navbar-*.lua
+* 2-simpleui-reading-stats-*.lua
+* quote-related patches
+
+Replace all of them with this plugin.
+
+⸻
+
+📌 Status
+
+Stable — actively used in daily setup
+
+Future updates may include:
+
+* compatibility with new KOReader releases
+* optional UI refinements
+
+⸻
+
+🙌 Credits
+
+* KOReader community for inspiration and patch ideas
+* Appearance plugin for initial direction on quote transparency
+* Iterative testing and real-world usage refinement
