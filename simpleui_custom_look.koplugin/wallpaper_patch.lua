@@ -165,33 +165,10 @@ local function patch_instance(inst)
     inst.onShow = function(self, ...)
         local ret = old_onShow(self, ...)
         pcall(function()
-            -- local is_night = G_reader_settings:isTrue("night_mode") --track last mode, and reapply if changed
-            -- log("onShow fired")
-            -- log("is_night = " .. tostring(is_night))
-            -- log("applied flag = " .. tostring(self._sui_wallpaper_v7_applied))
-            -- log("has onNightModeChange = " .. tostring(type(inst.onNightModeChange)))
-            -- log("last_night_mode = " .. tostring(self._sui_last_night_mode))
-            -- if self.sui_last_night_mode ~= is_night then
-            --     self._sui_wallpaper_v7_applied = nil
-            --     self.sui_last_night_mode = is_night
-            -- end
             apply_fullscreen_wallpaper(self)
             UIManager:setDirty(self, "full")
         end)
         return ret
-    end
-    log("--- instance keys ---")
-    for k, v in pairs(inst) do
-        log(tostring(k) .. " = " .. tostring(type(v)))
-    end
-
-    -- also check the metatable/class
-    local mt = getmetatable(inst)
-    if mt then
-        log("--- class keys ---")
-        for k, v in pairs(mt) do
-            log(tostring(k) .. " = " .. tostring(type(v)))
-        end
     end
     inst._wallpaper_patch_v7_instance = true
     log("instance patched")
