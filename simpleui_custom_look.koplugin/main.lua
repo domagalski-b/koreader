@@ -4,6 +4,8 @@ local function safe_require(name)
     local ok, err = pcall(require, name)
     if not ok then
         print("[simpleui_custom_look_v2] failed to load " .. tostring(name) .. ": " .. tostring(err))
+    else
+        print("[simpleui_custom_look_v2] OK: " .. tostring(name))
     end
 end
 
