@@ -2,7 +2,7 @@
 -- Standalone homescreen wallpaper patch for SimpleUI.
 -- Places ONE fullscreen wallpaper behind the already wrapped homescreen
 -- (content + bottom bar) and clears the white fills that were blocking it.
-
+print("[wallpaper_patch] file loaded")
 local UIManager = require("ui/uimanager")
 local Screen = require("device").screen
 local OverlapGroup = require("ui/widget/overlapgroup")
@@ -20,8 +20,10 @@ local function log(msg)
 end
 
 local function get_bg_path()
-    local base = "/mnt/onboard/.adds/koreader/images/backgrounds/"
+    local koreader_dir = require("datastorage"):getDataDir()-- gets the root of where the koreader file lives, so it works across different devices
+    local base = koreader_dir .. "/images/backgrounds/"
     local is_night = false
+
     if rawget(_G, "G_reader_settings") then
         pcall(function()
             is_night = G_reader_settings:isTrue("night_mode")
@@ -63,7 +65,8 @@ local function render_bg_widget(bg_path, sw, sh)
         image = bg_bb,
         width = sw,
         height = sh,
-        scale_factor = 1,
+        scale_factor = 0,
+        stretch_limit_percentage = 100,
     }
 end
 
@@ -163,11 +166,10 @@ local function patch_instance(inst)
         local ret = old_onShow(self, ...)
         pcall(function()
             apply_fullscreen_wallpaper(self)
-            UIManager:setDirty(self, "ui")
+            UIManager:setDirty(self, "full")
         end)
         return ret
     end
-
     inst._wallpaper_patch_v7_instance = true
     log("instance patched")
 end
@@ -245,6 +247,33 @@ local function try_install_later()
         return
     end
     UIManager:scheduleIn(1, try_install_later)
+end
+
+-- supports user toggling between light mode and dark mode, background now switches accordingly
+local original_refresh = HomescreenWidget.original_refresh
+HomescreenWidget.original_refresh = function(self, keep_cache)
+    local ret = original_refresh(self, keep_cache)
+    pcall(function()
+        UIManager:scheduleIn(0.16, function()
+            if Homescreen._instance == self then 
+                self._sui_wallpaper_v7_applied = nil
+                apply_fullscreen_wallpaper(self)
+                UIManager:setDirty(self,"full")
+            end
+        end )
+    end)
+    return ret
+end
+
+local original_refresh_immediate = HomescreenWidget.original_refresh_immediate
+HomescreenWidget.original_refresh_immediate = function(self, keep_cache)
+    local ret = original_refresh_immediate(self, keep_cache)
+    pcall(function()
+        self._sui_wallpaper_v7_applied=nil
+        apply_fullscreen_wallpaper(self)
+        UIManager:setDirty(self,"full")
+    end)
+    return ret
 end
 
 pcall(function()
